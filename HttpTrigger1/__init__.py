@@ -37,13 +37,14 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             status_code=400,
         )
 
-    # schema = "pitchbypitch"
+    schema = "pitchbypitch"
 
     df = statcast(start_dt=start_dt, end_dt=end_dt)
     logging.info(f"Ran statcast(start_dt={start_dt}, end_dt={end_dt})")
 
     df["id"] = df.apply(lambda row: uuid.uuid1(), axis=1).astype(str)
 
-    # df.to_sql(schema, engine, if_exists="append", index=False)
+    df.to_sql(schema, engine, if_exists="append", index=False)
+    logging.info(f"Added {len(df.index)} rows to {schema}")
 
     return func.HttpResponse(df.to_json(orient="records"))
