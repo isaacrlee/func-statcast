@@ -27,7 +27,7 @@ def main(mytimer: func.TimerRequest) -> None:
     end_dt = start_dt  # pull yesterday's statcast data
     schema = "pitchbypitch"
 
-    df = statcast(start_dt=start_dt, end_dt=end_dt,)
+    df = statcast(start_dt=start_dt, end_dt=end_dt)
     logging.info(f"Ran statcast(start_dt={start_dt}, end_dt={end_dt})")
 
     df["id"] = df.apply(lambda row: uuid.uuid1(), axis=1).astype(str)
